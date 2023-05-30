@@ -72,7 +72,7 @@ public class ImageCycler : MonoBehaviour
         WinConPayoutIndex.Add(new List<int> { 7, 7, 7 }, 2.45);
         WinConPayoutIndex.Add(new List<int> { 1, 1, 1, 1 }, 1.1);
         WinConPayoutIndex.Add(new List<int> { 2, 2, 2, 2 }, 2.2);
-        WinConPayoutIndex.Add(new List<int> { 3, 3, 3, 2 }, 3.3);
+        WinConPayoutIndex.Add(new List<int> { 3, 3, 3, 3 }, 3.3);
         WinConPayoutIndex.Add(new List<int> { 4, 4, 4, 4 }, 4.4);
         WinConPayoutIndex.Add(new List<int> { 5, 5, 5, 5 }, 5.5);
         WinConPayoutIndex.Add(new List<int> { 6, 6, 6, 6 }, 6.6);
