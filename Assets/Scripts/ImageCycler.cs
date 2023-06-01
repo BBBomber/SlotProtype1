@@ -46,6 +46,9 @@ public class ImageCycler : MonoBehaviour
     private AudioSource audioSource1;
     private AudioSource audioSource2;
 
+    public GameObject ImageMask;
+   
+
     private void Awake()
     {
         audioSource1 = gameObject.AddComponent<AudioSource>();
@@ -131,40 +134,35 @@ public class ImageCycler : MonoBehaviour
             totalCredits = totalCredits - betAmount;
             Credits.text = "Credits: " + totalCredits;
             spinning = true;
-            StartCoroutine(SpinImages());
+            SpinImages();
         }
     }
 
-    private System.Collections.IEnumerator SpinImages()
+    private void SpinImages()
     {
         Button spinButton = FindObjectOfType<SpinButton>().GetComponent<Button>();
+        ImageMask.SetActive(true);
         spinButton.interactable = false; // Disable the spin button
         BetSlider.interactable = false; //disable slider
         infoButton.interactable = false;
-        float startTime = Time.time;
+       
 
 
-        while (Time.time - startTime < cycleTime)
+        
+        
+            // Update the images for each component 
+        for (int i = 0; i < imageComponents.Length; i++)
         {
 
-            // Update the images for each component based on the progress
-            for (int i = 0; i < imageComponents.Length; i++)
-            {
+            imageComponents[i].sprite = GetRandomImage();
 
-                imageComponents[i].sprite = GetRandomImage();
-
-            }
-
-            yield return new WaitForSeconds(0.1f);
         }
 
+        Invoke("EndSpin", 3f);
+       
 
 
-        spinButton.interactable = true; // Enable the spin button
-        BetSlider.interactable = true; // Enable Slider
-        infoButton.interactable = true;
-        spinning = false;
-        SetWinMatrix();
+        
 
 
 
@@ -363,7 +361,16 @@ public class ImageCycler : MonoBehaviour
 
     }
 
-
+    private void EndSpin()
+    {
+        Button spinButton = FindObjectOfType<SpinButton>().GetComponent<Button>();
+        spinButton.interactable = true; // Enable the spin button
+        BetSlider.interactable = true; // Enable Slider
+        infoButton.interactable = true;
+        spinning = false;
+        ImageMask.SetActive(false);
+        SetWinMatrix();
+    }
 
 
 
