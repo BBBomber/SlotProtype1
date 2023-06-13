@@ -24,6 +24,7 @@ public class ImageCycler : MonoBehaviour
     public double betAmount = 10;
     public double totalCredits = 100;
     private double[] payMultipliers = new double[3];
+    
     // accessing elements will be done in a transposed manner. matrix[columnIndex][rowIndex] will give the value in the specified column and row, 
     public TMP_Text Credits;
     public TMP_Text LastWin;
@@ -33,8 +34,8 @@ public class ImageCycler : MonoBehaviour
     //insert coins text animation
     public TMP_Text InsertMoreCoins;
    
-
-    public Slider BetSlider; //slider ref
+    //button/slider refs
+    public Slider BetSlider; 
     public Button spinButton;
     public Button infoButton;
     private bool buttonClicked = false;
@@ -46,17 +47,23 @@ public class ImageCycler : MonoBehaviour
     private AudioSource audioSource1;
     private AudioSource audioSource2;
 
+    //mask object
     public GameObject ImageMask;
+
+    //amount of paylines being bet on
+    [SerializeField] private int PaylinesAmount;
    
 
     private void Awake()
     {
+        PaylinesAmount = 1;
         audioSource1 = gameObject.AddComponent<AudioSource>();
         audioSource1.clip = audioClip1;
 
         audioSource2 = gameObject.AddComponent<AudioSource>();
         audioSource2.clip = audioClip2;
 
+        //assign int to each image
         SpriteIndex.Add(imageArray[0], 1);
         SpriteIndex.Add(imageArray[1], 2);
         SpriteIndex.Add(imageArray[2], 3);
@@ -65,7 +72,7 @@ public class ImageCycler : MonoBehaviour
         SpriteIndex.Add(imageArray[5], 6);
         SpriteIndex.Add(imageArray[6], 7);
 
-        //temp
+        //dict of winning combinations to their payout multipliers
         WinConPayoutIndex.Add(new List<int> { 1, 1, 1 }, 0.35);
         WinConPayoutIndex.Add(new List<int> { 2, 2, 2 }, 0.7);
         WinConPayoutIndex.Add(new List<int> { 3, 3, 3 }, 1.05);
@@ -88,13 +95,13 @@ public class ImageCycler : MonoBehaviour
         WinConPayoutIndex.Add(new List<int> { 6, 6, 6, 6, 6 }, 9);
         WinConPayoutIndex.Add(new List<int> { 7, 7, 7, 7, 7 }, 10.5);
 
-
+        //setting text
         Credits.text = "Credits: " + totalCredits;
         LastWin.text = "Win Amount: " + 0;
         BetAmount.text = "Bet Amount: " + betAmount;
-       
         InsertMoreCoins.text = "Insert More Coins..";
         
+        //for insert more coins anim
         InsertMoreCoins.alpha = 0;
         
         InsertMoreCoins.enabled = false;
@@ -113,6 +120,7 @@ public class ImageCycler : MonoBehaviour
         {
             imageComponents[i].sprite = GetRandomImage();
         }
+        //check if player has the money to play
         BrokeOrNot();
     }
 
@@ -124,15 +132,32 @@ public class ImageCycler : MonoBehaviour
         BrokeOrNot();
     }
 
+    public void BetAmountUpdated(int value)
+    {
+        PaylinesAmount = value;
+        Debug.Log(PaylinesAmount);
+    }
+
+    //gets called when player clicks on spin button
     public void StartSpinning()
     {
         if (!spinning)
         {
+            Button spinButton = FindObjectOfType<SpinButton>().GetComponent<Button>();
             
+            //clean unneccesary visual and audio effects
             audioSource1.Stop();
             audioSource2.Stop();
+
+            //disable buttons
+            spinButton.interactable = false;
+            BetSlider.interactable = false;
+            infoButton.interactable = false;
+
+            //subtract bet amount from creds and set text
             totalCredits = totalCredits - betAmount;
             Credits.text = "Credits: " + totalCredits;
+
             spinning = true;
             SpinImages();
         }
@@ -140,24 +165,24 @@ public class ImageCycler : MonoBehaviour
 
     private void SpinImages()
     {
-        Button spinButton = FindObjectOfType<SpinButton>().GetComponent<Button>();
+        
         ImageMask.SetActive(true);
-        spinButton.interactable = false; // Disable the spin button
-        BetSlider.interactable = false; //disable slider
-        infoButton.interactable = false;
-       
-
+        
 
         
-        
-            // Update the images for each component 
+
+
+
+
+        // Update the images for each component 
         for (int i = 0; i < imageComponents.Length; i++)
         {
 
             imageComponents[i].sprite = GetRandomImage();
 
         }
-
+        
+        //call endspin function in x time
         Invoke("EndSpin", 3f);
        
 
@@ -363,12 +388,14 @@ public class ImageCycler : MonoBehaviour
 
     private void EndSpin()
     {
+        //enable buttons and do cleanup 
         Button spinButton = FindObjectOfType<SpinButton>().GetComponent<Button>();
-        spinButton.interactable = true; // Enable the spin button
-        BetSlider.interactable = true; // Enable Slider
+        spinButton.interactable = true; 
+        BetSlider.interactable = true; 
         infoButton.interactable = true;
         spinning = false;
         ImageMask.SetActive(false);
+        //call function which creates win matrix
         SetWinMatrix();
     }
 
