@@ -18,12 +18,12 @@ public class ImageCycler : MonoBehaviour
     private Dictionary<List<int>, double> WinConPayoutIndex = new Dictionary<List<int>, double>();// dict from a list of win conditions to their respective payout multipliers
 
 
-    private List<int>[] CurrentWinLists = new List<int>[3]; // array of max 3 lists which might be created after a spin stops to be used as keys in the above dict.
+    private List<int>[] CurrentWinLists = new List<int>[10]; // array of max 3 lists which might be created after a spin stops to be used as keys in the above dict.
 
     private int[][] winMatrix = new int[5][];//create an empty win matrix of 5 column arrays populate after spinning has stopped
     public double betAmount = 10;
     public double totalCredits = 100;
-    private double[] payMultipliers = new double[3];
+    private double[] payMultipliers = new double[10];
     
     // accessing elements will be done in a transposed manner. matrix[columnIndex][rowIndex] will give the value in the specified column and row, 
     public TMP_Text Credits;
@@ -246,6 +246,300 @@ public class ImageCycler : MonoBehaviour
         Credits.text = "Credits: " + totalCredits;
         LastWin.text = "Win Amount: " + betAmount * GetMaxFloat(payMultipliers);
 
+    }
+
+    private void PaylineWinChecker()
+    {
+        Payline1(winMatrix[0][1], 0);
+        if (PaylinesAmount > 1)
+        {
+            Payline2(winMatrix[0][0], 1);
+
+            if(PaylinesAmount > 2)
+            {
+                Payline3(winMatrix[0][2], 2);
+
+                if(PaylinesAmount > 3)
+                {
+                    Payline4(winMatrix[0][0], 3);
+
+                    if(PaylinesAmount > 4)
+                    {
+                        Payline5(winMatrix[0][2], 4);
+
+                        if(PaylinesAmount > 5)
+                        {
+                            Payline6(winMatrix[0][1], 5);
+
+                            if(PaylinesAmount > 6)
+                            {
+                                Payline7(winMatrix[0][1], 6);
+
+                                if(PaylinesAmount > 7)
+                                {
+                                    Payline8(winMatrix[0][0], 7);
+
+                                    if(PaylinesAmount > 8)
+                                    {
+                                        Payline9(winMatrix[0][2], 8);
+
+                                        if(PaylinesAmount > 9)
+                                        {
+                                            Payline10(winMatrix[0][0], 9);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+
+                    }
+                }
+
+                
+            }
+        }
+    }
+
+    private void Payline1(int startPoint, int pos)
+    {
+        List<int> listName = new List<int>();
+        listName.Add(startPoint);
+        if (winMatrix[1][1] == startPoint)
+        {
+            listName.Add(winMatrix[1][1]);
+            if (winMatrix[2][1] == startPoint)
+            {
+                listName.Add(winMatrix[2][1]);
+                if (winMatrix[3][1] == startPoint)
+                {
+                    listName.Add(winMatrix[3][1]);
+                    if (winMatrix[4][1] == startPoint)
+                    {
+                        listName.Add(winMatrix[4][1]);
+                        
+                    }
+                }
+            }   
+        }
+        CurrentWinLists[pos] = listName;
+    }
+
+    private void Payline2(int startPoint, int pos)
+    {
+        List<int> listName = new List<int>();
+        listName.Add(startPoint);
+        if (winMatrix[1][0] == startPoint)
+        {
+            listName.Add(winMatrix[1][0]);
+            if (winMatrix[2][0] == startPoint)
+            {
+                listName.Add(winMatrix[2][0]);
+                if (winMatrix[3][0] == startPoint)
+                {
+                    listName.Add(winMatrix[3][0]);
+                    if (winMatrix[4][0] == startPoint)
+                    {
+                        listName.Add(winMatrix[4][0]);
+
+                    }
+                }
+            }
+        }
+        CurrentWinLists[pos] = listName;
+    }
+
+    private void Payline3(int startPoint, int pos)
+    {
+        List<int> listName = new List<int>();
+        listName.Add(startPoint);
+        if (winMatrix[1][2] == startPoint)
+        {
+            listName.Add(winMatrix[1][2]);
+            if (winMatrix[2][2] == startPoint)
+            {
+                listName.Add(winMatrix[2][2]);
+                if (winMatrix[3][2] == startPoint)
+                {
+                    listName.Add(winMatrix[3][2]);
+                    if (winMatrix[4][2] == startPoint)
+                    {
+                        listName.Add(winMatrix[4][2]);
+
+                    }
+                }
+            }
+        }
+        CurrentWinLists[pos] = listName;
+    }
+
+    private void Payline4(int startPoint, int pos)
+    {
+        List<int> listName = new List<int>();
+        listName.Add(startPoint);
+        if (winMatrix[1][1] == startPoint)
+        {
+            listName.Add(winMatrix[1][1]);
+            if (winMatrix[2][2] == startPoint)
+            {
+                listName.Add(winMatrix[2][2]);
+                if (winMatrix[3][1] == startPoint)
+                {
+                    listName.Add(winMatrix[3][1]);
+                    if (winMatrix[4][0] == startPoint)
+                    {
+                        listName.Add(winMatrix[4][0]);
+
+                    }
+                }
+            }
+        }
+        CurrentWinLists[pos] = listName;
+
+    }
+
+    private void Payline5(int startPoint, int pos)
+    {
+        List<int> listName = new List<int>();
+        listName.Add(startPoint);
+        if (winMatrix[1][1] == startPoint)
+        {
+            listName.Add(winMatrix[1][1]);
+            if (winMatrix[2][0] == startPoint)
+            {
+                listName.Add(winMatrix[2][0]);
+                if (winMatrix[3][1] == startPoint)
+                {
+                    listName.Add(winMatrix[3][1]);
+                    if (winMatrix[4][2] == startPoint)
+                    {
+                        listName.Add(winMatrix[4][2]);
+
+                    }
+                }
+            }
+        }
+        CurrentWinLists[pos] = listName;
+    }
+
+    private void Payline6(int startPoint, int pos)
+    {
+        List<int> listName = new List<int>();
+        listName.Add(startPoint);
+        if (winMatrix[1][0] == startPoint)
+        {
+            listName.Add(winMatrix[1][0]);
+            if (winMatrix[2][0] == startPoint)
+            {
+                listName.Add(winMatrix[2][0]);
+                if (winMatrix[3][0] == startPoint)
+                {
+                    listName.Add(winMatrix[3][0]);
+                    if (winMatrix[4][1] == startPoint)
+                    {
+                        listName.Add(winMatrix[4][1]);
+
+                    }
+                }
+            }
+        }
+        CurrentWinLists[pos] = listName;
+    }
+
+    private void Payline7(int startPoint, int pos)
+    {
+        List<int> listName = new List<int>();
+        listName.Add(startPoint);
+        if (winMatrix[1][2] == startPoint)
+        {
+            listName.Add(winMatrix[1][2]);
+            if (winMatrix[2][2] == startPoint)
+            {
+                listName.Add(winMatrix[2][2]);
+                if (winMatrix[3][2] == startPoint)
+                {
+                    listName.Add(winMatrix[3][2]);
+                    if (winMatrix[4][1] == startPoint)
+                    {
+                        listName.Add(winMatrix[4][1]);
+
+                    }
+                }
+            }
+        }
+        CurrentWinLists[pos] = listName;
+    }
+
+    private void Payline8(int startPoint, int pos)
+    {
+        List<int> listName = new List<int>();
+        listName.Add(startPoint);
+        if (winMatrix[1][0] == startPoint)
+        {
+            listName.Add(winMatrix[1][0]);
+            if (winMatrix[2][1] == startPoint)
+            {
+                listName.Add(winMatrix[2][1]);
+                if (winMatrix[3][2] == startPoint)
+                {
+                    listName.Add(winMatrix[3][2]);
+                    if (winMatrix[4][2] == startPoint)
+                    {
+                        listName.Add(winMatrix[4][2]);
+
+                    }
+                }
+            }
+        }
+        CurrentWinLists[pos] = listName;
+    }
+
+    private void Payline9(int startPoint, int pos)
+    {
+        List<int> listName = new List<int>();
+        listName.Add(startPoint);
+        if (winMatrix[1][2] == startPoint)
+        {
+            listName.Add(winMatrix[1][2]);
+            if (winMatrix[2][1] == startPoint)
+            {
+                listName.Add(winMatrix[2][1]);
+                if (winMatrix[3][0] == startPoint)
+                {
+                    listName.Add(winMatrix[3][0]);
+                    if (winMatrix[4][0] == startPoint)
+                    {
+                        listName.Add(winMatrix[4][0]);
+
+                    }
+                }
+            }
+        }
+        CurrentWinLists[pos] = listName;
+    }
+
+    private void Payline10(int startPoint, int pos)
+    {
+        List<int> listName = new List<int>();
+        listName.Add(startPoint);
+        if (winMatrix[1][2] == startPoint)
+        {
+            listName.Add(winMatrix[1][2]);
+            if (winMatrix[2][1] == startPoint)
+            {
+                listName.Add(winMatrix[2][1]);
+                if (winMatrix[3][0] == startPoint)
+                {
+                    listName.Add(winMatrix[3][0]);
+                    if (winMatrix[4][1] == startPoint)
+                    {
+                        listName.Add(winMatrix[4][1]);
+
+                    }
+                }
+            }
+        }
+        CurrentWinLists[pos] = listName;
     }
 
     private void WinListChecker(int startPoint, int pos)
