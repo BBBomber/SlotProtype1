@@ -219,32 +219,17 @@ public class ImageCycler : MonoBehaviour
 
 
 
-
+        PaylineWinChecker();
 
         //create win lists
+        /*
         WinListChecker(winMatrix[0][0], 0);
         WinListChecker(winMatrix[0][1], 1);
         WinListChecker(winMatrix[0][2], 2);
+        */
 
 
-        var listToCheck1 = CurrentWinLists[0];
-        var result1 = CrossCheckList(listToCheck1);
-        payMultipliers[0] = result1;
-        var listToCheck2 = CurrentWinLists[1];
-        var result2 = CrossCheckList(listToCheck2);        
-        payMultipliers[1] = result2;
-        var listToCheck3 = CurrentWinLists[2];
-        var result3 = CrossCheckList(listToCheck3);        
-        payMultipliers[2] = result3;
-
-        totalCredits =  totalCredits + (betAmount *  GetMaxFloat(payMultipliers));
-       
-
-        BrokeOrNot(); //check if dude is broke or not
         
-        //ui setup afte game ends
-        Credits.text = "Credits: " + totalCredits;
-        LastWin.text = "Win Amount: " + betAmount * GetMaxFloat(payMultipliers);
 
     }
 
@@ -299,6 +284,8 @@ public class ImageCycler : MonoBehaviour
                 
             }
         }
+
+        CheckLists();
     }
 
     private void Payline1(int startPoint, int pos)
@@ -542,6 +529,50 @@ public class ImageCycler : MonoBehaviour
         CurrentWinLists[pos] = listName;
     }
 
+    private void CheckLists()
+    {
+        var listToCheck1 = CurrentWinLists[0];
+        var result1 = CrossCheckList(listToCheck1);
+        payMultipliers[0] = result1;
+        var listToCheck2 = CurrentWinLists[1];
+        var result2 = CrossCheckList(listToCheck2);
+        payMultipliers[1] = result2;
+        var listToCheck3 = CurrentWinLists[2];
+        var result3 = CrossCheckList(listToCheck3);
+        payMultipliers[2] = result3;
+        var listToCheck4 = CurrentWinLists[3];
+        var result4 = CrossCheckList(listToCheck4);
+        payMultipliers[3] = result4;
+        var listToCheck5 = CurrentWinLists[4];
+        var result5 = CrossCheckList(listToCheck5);
+        payMultipliers[4] = result5;
+        var listToCheck6 = CurrentWinLists[5];
+        var result6 = CrossCheckList(listToCheck6);
+        payMultipliers[5] = result6;
+        var listToCheck7 = CurrentWinLists[6];
+        var result7 = CrossCheckList(listToCheck7);
+        payMultipliers[6] = result7;
+        var listToCheck8 = CurrentWinLists[7];
+        var result8 = CrossCheckList(listToCheck8);
+        payMultipliers[7] = result8;
+        var listToCheck9 = CurrentWinLists[8];
+        var result9 = CrossCheckList(listToCheck9);
+        payMultipliers[8] = result9;
+        var listToCheck10 = CurrentWinLists[9];
+        var result10 = CrossCheckList(listToCheck10);
+        payMultipliers[9] = result10;
+
+        totalCredits = totalCredits + (betAmount * GetMaxFloat(payMultipliers));
+
+
+        BrokeOrNot(); //check if dude is broke or not
+
+        //ui setup afte game ends
+        Credits.text = "Credits: " + totalCredits;
+        LastWin.text = "Win Amount: " + betAmount * GetMaxFloat(payMultipliers);
+    }
+
+
     private void WinListChecker(int startPoint, int pos)
     {
         List<int> listName = new List<int>();
@@ -621,6 +652,7 @@ public class ImageCycler : MonoBehaviour
                 max = array[i];
             }
         }
+        //play sound based on if win or not
         if (max > 0)
         {
             audioSource1.Play();
