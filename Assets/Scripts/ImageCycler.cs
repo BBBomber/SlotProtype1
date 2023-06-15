@@ -6,6 +6,7 @@ using System;
 using Random = UnityEngine.Random;
 using System.Globalization;
 using TMPro;
+using System.CodeDom;
 //using System.Linq;
 
 public class ImageCycler : MonoBehaviour
@@ -562,14 +563,14 @@ public class ImageCycler : MonoBehaviour
         var result10 = CrossCheckList(listToCheck10);
         payMultipliers[9] = result10;
 
-        totalCredits = totalCredits + (betAmount * GetMaxFloat(payMultipliers));
+        totalCredits = totalCredits + CalculateTotal(payMultipliers);
 
 
         BrokeOrNot(); //check if dude is broke or not
 
         //ui setup afte game ends
         Credits.text = "Credits: " + totalCredits;
-        LastWin.text = "Win Amount: " + betAmount * GetMaxFloat(payMultipliers);
+        LastWin.text = "Win Amount: " + CalculateTotal(payMultipliers);
     }
 
 
@@ -603,17 +604,21 @@ public class ImageCycler : MonoBehaviour
 
     }
 
-    private void DebugWinMatrix()
+    private double CalculateTotal(double[] multipliers)
     {
-        for (int i = 0; i < 5; i++)
+        double total = 0.0;
+
+        // Iterate through the multipliers array and multiply each element by the betAmount
+        for (int i = 0; i < multipliers.Length; i++)
         {
-            for (int x = 0; x < 3; x++)
-            {
-                Debug.Log(winMatrix[i][x]);
-            }
+            total += multipliers[i] * betAmount;
         }
+
+        return total;
     }
 
+    
+    //checks if there is a payout multiplier for  combination, if there is it returns the multiplier, otherwise 0
     private double CrossCheckList(List<int> list)
     {
         foreach (var entry in WinConPayoutIndex)
@@ -624,9 +629,9 @@ public class ImageCycler : MonoBehaviour
                 return entry.Value;
             }
         }
-        return -1;
+        return 0;
     }
-
+    //checks if a list matches another list
     private bool ListEquals(List<int> list1, List<int> list2)
     {
         if (list1.Count != list2.Count)
@@ -641,7 +646,7 @@ public class ImageCycler : MonoBehaviour
         return true;
     }
 
-
+    //when given an array of doubles, it returns the biggest double from it. 
     private double GetMaxFloat(double[] array)
     {
         double max = 0;
