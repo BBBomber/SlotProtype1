@@ -3753,6 +3753,7 @@ MonoBehaviour:
   BetSlider: {fileID: 772763476}
   spinButton: {fileID: 590068300}
   infoButton: {fileID: 1506396761}
+  paylineBets: {fileID: 1142400707}
   audioClip1: {fileID: 8300000, guid: 69f59fc59ff6dad4189398ba7909abf3, type: 3}
   audioClip2: {fileID: 8300000, guid: 9936d42403838cb42bc0825756cf4bc9, type: 3}
   ImageMask: {fileID: 856630101}
@@ -5797,8 +5798,8 @@ RectTransform:
   - {fileID: 982939349}
   - {fileID: 590068299}
   - {fileID: 1142400706}
-  - {fileID: 721781707}
   - {fileID: 1768651750}
+  - {fileID: 721781707}
   - {fileID: 1499797947}
   - {fileID: 1986733083}
   - {fileID: 200695857}
@@ -5824,7 +5825,7 @@ GameObject:
   - component: {fileID: 1142400707}
   - component: {fileID: 1142400710}
   m_Layer: 5
-  m_Name: Dropdown
+  m_Name: AmountOfPaylines
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -40,6 +40,7 @@ public class ImageCycler : MonoBehaviour
     public Button spinButton;
     public Button infoButton;
     private bool buttonClicked = false;
+    public TMP_Dropdown paylineBets;
 
     //audio stuff
     public AudioClip audioClip1;
@@ -154,6 +155,7 @@ public class ImageCycler : MonoBehaviour
             spinButton.interactable = false;
             BetSlider.interactable = false;
             infoButton.interactable = false;
+            paylineBets.interactable = false;
 
             //subtract bet amount from creds and set text
             totalCredits = totalCredits - betAmount;
@@ -271,7 +273,7 @@ public class ImageCycler : MonoBehaviour
 
                                         if(PaylinesAmount > 9)
                                         {
-                                            Payline10(winMatrix[0][0], 9);
+                                            Payline10(winMatrix[0][1], 9);
                                         }
                                     }
                                 }
@@ -296,12 +298,15 @@ public class ImageCycler : MonoBehaviour
         if (winMatrix[1][1] == startPoint)
         {
             listName.Add(winMatrix[1][1]);
+            
             if (winMatrix[2][1] == startPoint)
             {
                 listName.Add(winMatrix[2][1]);
+                
                 if (winMatrix[3][1] == startPoint)
                 {
                     listName.Add(winMatrix[3][1]);
+                    
                     if (winMatrix[4][1] == startPoint)
                     {
                         listName.Add(winMatrix[4][1]);
@@ -532,36 +537,75 @@ public class ImageCycler : MonoBehaviour
 
     private void CheckLists()
     {
-        var listToCheck1 = CurrentWinLists[0];
-        var result1 = CrossCheckList(listToCheck1);
-        payMultipliers[0] = result1;
-        var listToCheck2 = CurrentWinLists[1];
-        var result2 = CrossCheckList(listToCheck2);
-        payMultipliers[1] = result2;
-        var listToCheck3 = CurrentWinLists[2];
-        var result3 = CrossCheckList(listToCheck3);
-        payMultipliers[2] = result3;
-        var listToCheck4 = CurrentWinLists[3];
-        var result4 = CrossCheckList(listToCheck4);
-        payMultipliers[3] = result4;
-        var listToCheck5 = CurrentWinLists[4];
-        var result5 = CrossCheckList(listToCheck5);
-        payMultipliers[4] = result5;
-        var listToCheck6 = CurrentWinLists[5];
-        var result6 = CrossCheckList(listToCheck6);
-        payMultipliers[5] = result6;
-        var listToCheck7 = CurrentWinLists[6];
-        var result7 = CrossCheckList(listToCheck7);
-        payMultipliers[6] = result7;
-        var listToCheck8 = CurrentWinLists[7];
-        var result8 = CrossCheckList(listToCheck8);
-        payMultipliers[7] = result8;
-        var listToCheck9 = CurrentWinLists[8];
-        var result9 = CrossCheckList(listToCheck9);
-        payMultipliers[8] = result9;
-        var listToCheck10 = CurrentWinLists[9];
-        var result10 = CrossCheckList(listToCheck10);
-        payMultipliers[9] = result10;
+        
+        
+            var listToCheck1 = CurrentWinLists[0];
+            var result1 = CrossCheckList(listToCheck1);
+            payMultipliers[0] = result1;
+        
+        if (PaylinesAmount > 1)
+        {
+            var listToCheck2 = CurrentWinLists[1];
+            var result2 = CrossCheckList(listToCheck2);
+            payMultipliers[1] = result2;
+        }
+        if (PaylinesAmount > 2)
+        {
+            var listToCheck3 = CurrentWinLists[2];
+            var result3 = CrossCheckList(listToCheck3);
+            payMultipliers[2] = result3;
+        }
+        if (PaylinesAmount > 3)
+        {
+            var listToCheck4 = CurrentWinLists[3];
+            var result4 = CrossCheckList(listToCheck4);
+            payMultipliers[3] = result4;
+        }
+        if (PaylinesAmount > 4)
+        {
+            var listToCheck5 = CurrentWinLists[4];
+            var result5 = CrossCheckList(listToCheck5);
+            payMultipliers[4] = result5;
+        }
+        if (PaylinesAmount > 5)
+        {
+            var listToCheck6 = CurrentWinLists[5];
+            var result6 = CrossCheckList(listToCheck6);
+            payMultipliers[5] = result6;
+        }
+        if (PaylinesAmount > 6)
+        {
+            var listToCheck7 = CurrentWinLists[6];
+            var result7 = CrossCheckList(listToCheck7);
+            payMultipliers[6] = result7;
+        }
+        if (PaylinesAmount > 7)
+        {
+            var listToCheck8 = CurrentWinLists[7];
+            var result8 = CrossCheckList(listToCheck8);
+            payMultipliers[7] = result8;
+        }
+        if (PaylinesAmount > 8)
+        {
+            var listToCheck9 = CurrentWinLists[8];
+            var result9 = CrossCheckList(listToCheck9);
+            payMultipliers[8] = result9;
+        }
+        if (PaylinesAmount > 9)
+        {
+            var listToCheck10 = CurrentWinLists[9];
+            var result10 = CrossCheckList(listToCheck10);
+            payMultipliers[9] = result10;
+        }
+        
+        
+        
+       
+       
+       
+        
+        
+        
 
         totalCredits = totalCredits + CalculateTotal(payMultipliers);
 
@@ -574,7 +618,7 @@ public class ImageCycler : MonoBehaviour
     }
 
 
-    private void WinListChecker(int startPoint, int pos)
+    /*private void WinListChecker(int startPoint, int pos)
     {
         List<int> listName = new List<int>();
         listName.Add(startPoint);
@@ -602,7 +646,7 @@ public class ImageCycler : MonoBehaviour
         Debug.Log("WinList Added " + string.Join(" , ", CurrentWinLists[pos]));
 
 
-    }
+    }*/
 
     private double CalculateTotal(double[] multipliers)
     {
@@ -613,7 +657,7 @@ public class ImageCycler : MonoBehaviour
         {
             total += multipliers[i] * betAmount;
         }
-
+        PlayWinLoseSound(total);
         return total;
     }
 
@@ -657,19 +701,24 @@ public class ImageCycler : MonoBehaviour
                 max = array[i];
             }
         }
-        //play sound based on if win or not
-        if (max > 0)
-        {
-            audioSource1.Play();
-        }
-        if (max == 0)
-        {
-            audioSource2.Play();
-        }
+       
         return max;
 
 
 
+    }
+
+    private void PlayWinLoseSound(double winAmount)
+    {
+        //play sound based on if win or not
+        if (winAmount > 0)
+        {
+            audioSource1.Play();
+        }
+        if (winAmount == 0)
+        {
+            audioSource2.Play();
+        }
     }
 
     private void BrokeOrNot() //set spin button interaction 
@@ -701,6 +750,8 @@ public class ImageCycler : MonoBehaviour
 
             BetSlider.interactable = true;
 
+            paylineBets.interactable = true;
+
             if(betAmount < totalCredits)
             {
                 spinButton.interactable = true;
@@ -711,6 +762,7 @@ public class ImageCycler : MonoBehaviour
         {
             spinButton.interactable = false;
             BetSlider.interactable = false;
+            paylineBets.interactable = false;
 
             buttonClicked = true;
         }
@@ -724,6 +776,7 @@ public class ImageCycler : MonoBehaviour
         spinButton.interactable = true; 
         BetSlider.interactable = true; 
         infoButton.interactable = true;
+        paylineBets.interactable = true;
         spinning = false;
         ImageMask.SetActive(false);
         //call function which creates win matrix
