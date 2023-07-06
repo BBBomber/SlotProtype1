@@ -19,7 +19,8 @@ public class BetSlider : MonoBehaviour
     
     private void UpdateBetAmount(float value)
     {
-        FindObjectOfType<ImageCycler>().StoppedSliding(value);
+        int x = Convert.ToInt32 (value);
+        FindObjectOfType<ImageCycler>().StoppedSliding(x);
     }
 }
 

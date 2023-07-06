@@ -15,15 +15,15 @@ public class ImageCycler : MonoBehaviour
     public float cycleTime = 3.0f; // Total time for the cycling animation
     private bool spinning = false; // Flag to indicate if spinning is in progress 
     private Dictionary<Sprite, int> SpriteIndex = new Dictionary<Sprite, int>(); //dict from sprite to int for checking payouts
-    private Dictionary<List<int>, double> WinConPayoutIndex = new Dictionary<List<int>, double>();// dict from a list of win conditions to their respective payout multipliers
+    private Dictionary<List<int>, int> WinConPayoutIndex = new Dictionary<List<int>, int>();// dict from a list of win conditions to their respective payout multipliers
 
 
     private List<int>[] CurrentWinLists = new List<int>[3]; // array of max 3 lists which might be created after a spin stops to be used as keys in the above dict.
 
     private int[][] winMatrix = new int[5][];//create an empty win matrix of 5 column arrays populate after spinning has stopped
-    public double betAmount = 10;
-    public double totalCredits = 100;
-    private double[] payMultipliers = new double[3];
+    public int betAmount = 10;
+    public int totalCredits = 1000;
+    private int[] payMultipliers = new int[3];
     // accessing elements will be done in a transposed manner. matrix[columnIndex][rowIndex] will give the value in the specified column and row, 
     public TMP_Text Credits;
     public TMP_Text LastWin;
@@ -66,32 +66,32 @@ public class ImageCycler : MonoBehaviour
         SpriteIndex.Add(imageArray[6], 7);
 
         //temp
-        WinConPayoutIndex.Add(new List<int> { 1, 1, 1 }, 0.35);
-        WinConPayoutIndex.Add(new List<int> { 2, 2, 2 }, 0.7);
-        WinConPayoutIndex.Add(new List<int> { 3, 3, 3 }, 1.05);
-        WinConPayoutIndex.Add(new List<int> { 4, 4, 4 }, 1.4);
-        WinConPayoutIndex.Add(new List<int> { 5, 5, 5 }, 1.75);
-        WinConPayoutIndex.Add(new List<int> { 6, 6, 6 }, 2.1);
-        WinConPayoutIndex.Add(new List<int> { 7, 7, 7 }, 2.45);
-        WinConPayoutIndex.Add(new List<int> { 1, 1, 1, 1 }, 1.1);
-        WinConPayoutIndex.Add(new List<int> { 2, 2, 2, 2 }, 2.2);
-        WinConPayoutIndex.Add(new List<int> { 3, 3, 3, 3 }, 3.3);
-        WinConPayoutIndex.Add(new List<int> { 4, 4, 4, 4 }, 4.4);
-        WinConPayoutIndex.Add(new List<int> { 5, 5, 5, 5 }, 5.5);
-        WinConPayoutIndex.Add(new List<int> { 6, 6, 6, 6 }, 6.6);
-        WinConPayoutIndex.Add(new List<int> { 7, 7, 7, 7 }, 7.7);
-        WinConPayoutIndex.Add(new List<int> { 1, 1, 1, 1, 1 }, 1.5);
-        WinConPayoutIndex.Add(new List<int> { 2, 2, 2, 2, 2 }, 3);
-        WinConPayoutIndex.Add(new List<int> { 3, 3, 3, 3, 3 }, 4.5);
-        WinConPayoutIndex.Add(new List<int> { 4, 4, 4, 4, 4 }, 6);
-        WinConPayoutIndex.Add(new List<int> { 5, 5, 5, 5, 5 }, 7.5);
-        WinConPayoutIndex.Add(new List<int> { 6, 6, 6, 6, 6 }, 9);
-        WinConPayoutIndex.Add(new List<int> { 7, 7, 7, 7, 7 }, 10.5);
+        //WinConPayoutIndex.Add(new List<int> { 1, 1, 1 }, 0.35);
+        //WinConPayoutIndex.Add(new List<int> { 2, 2, 2 }, 0.7);
+        //WinConPayoutIndex.Add(new List<int> { 3, 3, 3 }, 1.05);
+       // WinConPayoutIndex.Add(new List<int> { 4, 4, 4 }, 1.4);
+        //WinConPayoutIndex.Add(new List<int> { 5, 5, 5 }, 1.75);
+        WinConPayoutIndex.Add(new List<int> { 6, 6, 6 }, 4);
+        WinConPayoutIndex.Add(new List<int> { 7, 7, 7 }, 4);
+        WinConPayoutIndex.Add(new List<int> { 1, 1, 1, 1 }, 3);
+        WinConPayoutIndex.Add(new List<int> { 2, 2, 2, 2 }, 3);
+        WinConPayoutIndex.Add(new List<int> { 3, 3, 3, 3 }, 3);
+        WinConPayoutIndex.Add(new List<int> { 4, 4, 4, 4 }, 3);
+        WinConPayoutIndex.Add(new List<int> { 5, 5, 5, 5 }, 3);
+        WinConPayoutIndex.Add(new List<int> { 6, 6, 6, 6 }, 8);
+        WinConPayoutIndex.Add(new List<int> { 7, 7, 7, 7 }, 8);
+        WinConPayoutIndex.Add(new List<int> { 1, 1, 1, 1, 1 }, 5);
+        WinConPayoutIndex.Add(new List<int> { 2, 2, 2, 2, 2 }, 5);
+        WinConPayoutIndex.Add(new List<int> { 3, 3, 3, 3, 3 }, 5);
+        WinConPayoutIndex.Add(new List<int> { 4, 4, 4, 4, 4 }, 5);
+        WinConPayoutIndex.Add(new List<int> { 5, 5, 5, 5, 5 }, 5);
+        WinConPayoutIndex.Add(new List<int> { 6, 6, 6, 6, 6 }, 10);
+        WinConPayoutIndex.Add(new List<int> { 7, 7, 7, 7, 7 }, 10);
 
 
-        Credits.text = "Credits: " + totalCredits;
-        LastWin.text = "Win Amount: " + 0;
-        BetAmount.text = "Bet Amount: " + betAmount;
+        Credits.text = totalCredits.ToString();
+        LastWin.text = "Win: " + 0;
+        BetAmount.text = "Bet: " + betAmount;
        
         InsertMoreCoins.text = "Insert More Coins..";
         
@@ -116,11 +116,11 @@ public class ImageCycler : MonoBehaviour
         BrokeOrNot();
     }
 
-    public void StoppedSliding(float value)
+    public void StoppedSliding(int value)
     {
         
         betAmount = value;
-        BetAmount.text = "Bet Amount: " + betAmount;
+        BetAmount.text = "Bet: " + betAmount;
         BrokeOrNot();
     }
 
@@ -132,7 +132,7 @@ public class ImageCycler : MonoBehaviour
             audioSource1.Stop();
             audioSource2.Stop();
             totalCredits = totalCredits - betAmount;
-            Credits.text = "Credits: " + totalCredits;
+            Credits.text = totalCredits.ToString();
             spinning = true;
             SpinImages();
         }
@@ -218,8 +218,8 @@ public class ImageCycler : MonoBehaviour
         BrokeOrNot(); //check if dude is broke or not
         
         //ui setup afte game ends
-        Credits.text = "Credits: " + totalCredits;
-        LastWin.text = "Win Amount: " + betAmount * GetMaxFloat(payMultipliers);
+        Credits.text = totalCredits.ToString();
+        LastWin.text = "Win: " + betAmount * GetMaxFloat(payMultipliers);
 
     }
 
@@ -264,7 +264,7 @@ public class ImageCycler : MonoBehaviour
         }
     }
 
-    private double CrossCheckList(List<int> list)
+    private int CrossCheckList(List<int> list)
     {
         foreach (var entry in WinConPayoutIndex)
         {
@@ -292,9 +292,9 @@ public class ImageCycler : MonoBehaviour
     }
 
 
-    private double GetMaxFloat(double[] array)
+    private int GetMaxFloat(int[] array)
     {
-        double max = 0;
+        int max = 0;
         for (int i = 0; i < array.Length; i++)
         {
             if (array[i] > max)
