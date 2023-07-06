@@ -9,7 +9,7 @@ public class TestWebRequest : MonoBehaviour
     [ContextMenu("Test Get")]
    public async void TestGet()
    {
-        var url = "https://jsonplaceholder.typicode.com/todos/1";
+        var url = "https://jsonplaceholder.typicode.com/users";
 
         using var www = UnityWebRequest.Get(url);
 
