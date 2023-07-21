@@ -37,6 +37,7 @@ public class ImageCycler : MonoBehaviour
     public Slider BetSlider; //slider ref
     public Button spinButton;
     public Button infoButton;
+    
     private bool buttonClicked = false;
 
     //audio stuff
